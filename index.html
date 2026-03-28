@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReadyPath — Turn messy vendor paperwork into a clear submission path</title>
-  <meta name="description" content="Upload a vendor onboarding packet and get the real requirements, missing items, next actions, and submission readiness before delays and back-and-forth." />
+  <title>ReadyPath — Stop losing time on vendor onboarding paperwork</title>
+  <meta name="description" content="ReadyPath turns messy vendor onboarding packets into a clear requirements map, missing-document list, risk flags, and next-step workflow before back-and-forth slows the team down." />
   <style>
     :root {
       --bg: #0b1020;
@@ -16,9 +16,11 @@
       --accent: #7c9cff;
       --accent-2: #9ef0d0;
       --danger: #ffb4b4;
+      --success: #a7f3d0;
       --max: 1120px;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -48,11 +50,11 @@
       margin: 18px 0 16px;
       font-size: clamp(34px, 7vw, 64px);
       line-height: 1.02;
-      max-width: 900px;
+      max-width: 920px;
       letter-spacing: -0.03em;
     }
     .sub {
-      max-width: 780px;
+      max-width: 800px;
       color: var(--muted);
       font-size: clamp(17px, 2.2vw, 22px);
     }
@@ -70,6 +72,7 @@
       border-radius: 12px;
       font-weight: 700;
       border: 1px solid transparent;
+      cursor: pointer;
     }
     .btn-primary { background: var(--accent); color: #0a112f; }
     .btn-secondary { border-color: rgba(255,255,255,.16); color: var(--text); background: rgba(255,255,255,.03); }
@@ -89,7 +92,7 @@
     .card strong { display: block; margin-bottom: 8px; font-size: 15px; }
     section { padding: 42px 0; }
     h2 { font-size: clamp(26px,4vw,40px); margin: 0 0 12px; }
-    .lead { color: var(--muted); max-width: 800px; }
+    .lead { color: var(--muted); max-width: 820px; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 22px; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 22px; }
     .step, .faq, .proof, .panel { padding: 20px; }
@@ -106,14 +109,96 @@
     .cta-panel {
       margin-top: 18px;
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.05fr .95fr;
       gap: 18px;
       align-items: stretch;
     }
-    .small { font-size: 14px; color: var(--muted); }
+    .small, .fine-print { font-size: 14px; color: var(--muted); }
     .faq p, .proof p, .panel p { color: var(--muted); margin: 8px 0 0; }
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .chip {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .field,
+    .field-full {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .field-full { grid-column: 1 / -1; }
+    label {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 13px 14px;
+      font: inherit;
+      outline: none;
+    }
+    input::placeholder, textarea::placeholder { color: #93a0c6; }
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(124,156,255,.8);
+      box-shadow: 0 0 0 3px rgba(124,156,255,.18);
+    }
+    textarea { min-height: 108px; resize: vertical; }
+    .form-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .trust-list {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+    .trust-list li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    .trust-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 700;
+    }
+    .success-note {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(167,243,208,.28);
+      background: rgba(167,243,208,.08);
+      color: #dffdf0;
+    }
+    .success-note.show { display: block; }
     @media (max-width: 920px) {
-      .meta, .grid-3, .grid-2, .process, .cta-panel { grid-template-columns: 1fr; }
+      .meta, .grid-3, .grid-2, .process, .cta-panel, .form-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -121,17 +206,22 @@
   <header class="hero">
     <div class="wrap">
       <div class="eyebrow">ReadyPath • Vendor Onboarding Twin • Bilingual-ready</div>
-      <h1>Turn messy vendor onboarding packets into a clear submission path.</h1>
-      <p class="sub">Upload the packet. We map the real requirements, missing documents, ambiguity points, and next actions — before delays, back-and-forth, and silent rejections.</p>
+      <h1>Stop losing days to messy vendor onboarding packets.</h1>
+      <p class="sub">ReadyPath turns scattered PDFs, email threads, and unclear requirements into one clear submission path: what is required, what is missing, what is risky, and what must happen next.</p>
+      <div class="hero-points">
+        <div class="chip">Find missing documents before submission</div>
+        <div class="chip">Surface hidden dependencies early</div>
+        <div class="chip">Give teams a real readiness view</div>
+      </div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#waitlist">Join the early access list</a>
+        <a class="btn btn-primary" href="#waitlist">Request early access</a>
         <a class="btn btn-secondary" href="#how">See how it works</a>
       </div>
       <div class="meta">
-        <div class="card"><strong>Built for</strong> procurement-light teams, agencies, operations teams, and companies handling vendor paperwork repeatedly.</div>
-        <div class="card"><strong>Output</strong> requirements map, missing-doc list, risk flags, readiness score, and next-step checklist.</div>
-        <div class="card"><strong>Why now</strong> most onboarding workflows still live in PDFs, email chains, spreadsheets, and tribal memory.</div>
-        <div class="card"><strong>Positioning</strong> not OCR, not RPA, not generic document AI — a machine-readable twin for messy operational flows.</div>
+        <div class="card"><strong>Built for</strong> operations teams, agencies, and vendor-heavy workflows where packet confusion slows approvals.</div>
+        <div class="card"><strong>Main output</strong> requirements map, missing-doc checklist, risk flags, and next-step workflow in one view.</div>
+        <div class="card"><strong>Why teams care</strong> onboarding work often breaks across PDFs, emails, spreadsheets, and tribal memory.</div>
+        <div class="card"><strong>What makes it different</strong> not generic document AI — ReadyPath models the operational logic between the documents.</div>
       </div>
     </div>
   </header>
@@ -139,25 +229,25 @@
   <main>
     <section>
       <div class="wrap">
-        <h2>The real problem is not the document. It’s the hidden logic between documents.</h2>
-        <p class="lead">Vendor onboarding breaks because requirements are scattered, dependencies are implicit, and teams only discover missing items after delays. ReadyPath reconstructs the process itself — not just the files.</p>
+        <h2>The real problem is not the paperwork. It’s the hidden process behind the paperwork.</h2>
+        <p class="lead">Most vendor onboarding delays happen because the packet looks complete when it isn’t. Requirements are buried, dependencies are implicit, and teams only discover missing items after review starts. ReadyPath reconstructs the process itself so teams can act before the rework begins.</p>
         <div class="grid-2">
           <div class="panel">
             <div class="kicker">Without ReadyPath</div>
             <ul class="danger-list">
-              <li>Confusing onboarding packets and vague requirements</li>
-              <li>Back-and-forth with suppliers over missing documents</li>
-              <li>Approval bottlenecks caused by invisible dependencies</li>
-              <li>Repeated delays because no one knows what “ready” means</li>
+              <li>Teams guess what the packet is actually asking for</li>
+              <li>Missing items show up late after internal review already started</li>
+              <li>Suppliers bounce between unclear requests and repeated follow-up</li>
+              <li>No shared definition of what “submission ready” means</li>
             </ul>
           </div>
           <div class="panel">
             <div class="kicker">With ReadyPath</div>
             <ul>
               <li>A clean requirements map from messy packet inputs</li>
-              <li>A missing-items checklist before submission starts</li>
+              <li>A missing-items list before submission gets blocked</li>
               <li>Ambiguity and risk flags surfaced early</li>
-              <li>A structured readiness score and next-step workflow</li>
+              <li>A practical ready / blocked / not-ready view for the team</li>
             </ul>
           </div>
         </div>
@@ -167,46 +257,95 @@
     <section id="how">
       <div class="wrap">
         <h2>How it works</h2>
-        <p class="lead">The first version is focused, sharp, and operational. It takes packet chaos and turns it into a submission plan teams can actually act on.</p>
+        <p class="lead">The first release is narrow on purpose: take packet chaos, convert it into a usable workflow, and help teams reduce avoidable delays.</p>
         <div class="process">
-          <div class="step"><div class="kicker">Step 1</div><strong>Upload packet inputs</strong><p>PDFs, screenshots, requirement emails, and notes from the other side.</p></div>
-          <div class="step"><div class="kicker">Step 2</div><strong>Extract the process twin</strong><p>We reconstruct requirements, dependencies, fields, missing evidence, and exception paths.</p></div>
-          <div class="step"><div class="kicker">Step 3</div><strong>Get a readiness output</strong><p>Receive missing-doc requests, risk flags, a checklist tree, and a submission-ready score.</p></div>
-          <div class="step"><div class="kicker">Step 4</div><strong>Move faster with less rework</strong><p>Your team stops guessing and starts executing from a real map.</p></div>
+          <div class="step"><div class="kicker">Step 1</div><strong>Collect packet inputs</strong><p>Upload PDFs, screenshots, requirement emails, and notes from the buyer or onboarding team.</p></div>
+          <div class="step"><div class="kicker">Step 2</div><strong>Extract the process twin</strong><p>ReadyPath reconstructs requirements, dependencies, fields, missing evidence, and exception paths.</p></div>
+          <div class="step"><div class="kicker">Step 3</div><strong>Get a readiness output</strong><p>Receive missing-doc requests, risk flags, checklist logic, and a practical readiness score.</p></div>
+          <div class="step"><div class="kicker">Step 4</div><strong>Submit with less rework</strong><p>Your team moves from guesswork to a clear, shared execution path.</p></div>
         </div>
       </div>
     </section>
 
     <section>
       <div class="wrap">
-        <h2>What the first release will include</h2>
+        <h2>What the first release is designed to help you do</h2>
         <div class="grid-3">
-          <div class="proof"><div class="kicker">Requirements graph</div><p>A normalized view of what is required, what depends on what, and what is still unclear.</p></div>
-          <div class="proof"><div class="kicker">Missing-doc engine</div><p>A supplier-facing list of what is missing and what needs clarification before internal review.</p></div>
-          <div class="proof"><div class="kicker">Readiness scoring</div><p>A practical “ready / not ready / blocked” status so teams can stop guessing.</p></div>
+          <div class="proof"><div class="kicker">See the real requirements</div><p>Normalize scattered instructions into one view of what is required, what depends on what, and what is still unclear.</p></div>
+          <div class="proof"><div class="kicker">Catch missing items early</div><p>Spot missing documents and clarification gaps before the packet gets stuck in review or returned.</p></div>
+          <div class="proof"><div class="kicker">Move teams faster</div><p>Give internal teams and suppliers a shared checklist and a clearer definition of submission readiness.</p></div>
         </div>
       </div>
     </section>
 
     <section id="waitlist">
       <div class="wrap">
-        <h2>Join early access</h2>
-        <p class="lead">We’re validating the first release with teams that repeatedly handle vendor onboarding and submission-heavy workflows.</p>
+        <h2>Request early access</h2>
+        <p class="lead">If your team repeatedly deals with vendor onboarding, submission-heavy workflows, or document chaos before approvals, join the first validation group.</p>
         <div class="cta-panel">
           <div class="panel">
-            <div class="kicker">Who should join</div>
+            <div class="kicker">Why join now</div>
             <ul>
-              <li>Operations teams handling supplier onboarding</li>
-              <li>Agencies or service firms dealing with repeated client/vendor documentation</li>
-              <li>Procurement-light teams drowning in onboarding packets</li>
-              <li>Teams wanting a bilingual English/Arabic-ready workflow layer</li>
+              <li>Get access while the first workflow is being shaped around real operator pain</li>
+              <li>Help define the most useful outputs: missing-doc logic, readiness scoring, and risk visibility</li>
+              <li>Priority for early pilot conversations once the first product loop is ready</li>
+            </ul>
+            <ul class="trust-list">
+              <li>Best fit for teams handling repeated vendor or supplier onboarding</li>
+              <li>Bilingual workflow direction: English + Arabic</li>
+              <li>No long form — just enough to qualify the use case</li>
             </ul>
           </div>
           <div class="panel">
-            <div class="kicker">Early access CTA</div>
-            <p><strong>Email to join:</strong> <a href="mailto:info@readypath.pro?subject=ReadyPath%20Early%20Access">info@readypath.pro</a></p>
-            <p><strong>Subject line:</strong> ReadyPath Early Access</p>
-            <p class="small">Temporary CTA until the Tally form is connected.</p>
+            <div class="kicker">Early access form</div>
+            <p>Leave your details and a short note about your workflow. Responses go to <strong>info@readypath.pro</strong>.</p>
+            <form id="lead-form" action="https://formsubmit.co/info@readypath.pro" method="POST">
+              <input type="hidden" name="_subject" value="ReadyPath Early Access Lead" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="https://readypath.pro/?submitted=true#waitlist" />
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" name="name" type="text" placeholder="Ahmed" required />
+                </div>
+                <div class="field">
+                  <label for="work-email">Work email</label>
+                  <input id="work-email" name="email" type="email" placeholder="name@company.com" required />
+                </div>
+                <div class="field">
+                  <label for="company">Company</label>
+                  <input id="company" name="company" type="text" placeholder="Company name" required />
+                </div>
+                <div class="field">
+                  <label for="role">Role</label>
+                  <input id="role" name="role" type="text" placeholder="Operations / Procurement / Founder" />
+                </div>
+                <div class="field">
+                  <label for="volume">Onboarding volume</label>
+                  <select id="volume" name="monthly_volume">
+                    <option value="">Select range</option>
+                    <option>1–10 packets / month</option>
+                    <option>11–50 packets / month</option>
+                    <option>51–200 packets / month</option>
+                    <option>200+ packets / month</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="region">Primary language / region</label>
+                  <input id="region" name="region" type="text" placeholder="Saudi / GCC / English / Arabic" />
+                </div>
+                <div class="field-full">
+                  <label for="pain">What slows your process down today?</label>
+                  <textarea id="pain" name="workflow_pain" placeholder="Example: requirements change across emails, suppliers submit incomplete docs, and our team only catches gaps after review starts."></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Request early access</button>
+                <div class="fine-print">By submitting, you’re asking to be contacted about early access or a pilot. No spam. If the form service is not yet activated, email <a href="mailto:info@readypath.pro?subject=ReadyPath%20Early%20Access">info@readypath.pro</a>.</div>
+              </div>
+            </form>
+            <div id="success-note" class="success-note">Thanks — your request was submitted. If you do not receive a reply, send a backup email to info@readypath.pro.</div>
           </div>
         </div>
       </div>
@@ -218,8 +357,8 @@
         <div class="grid-2">
           <div class="faq"><strong>Is this OCR or a generic document chatbot?</strong><p>No. The point is reconstructing the operational logic between requirements, documents, exceptions, and readiness.</p></div>
           <div class="faq"><strong>Who is this for first?</strong><p>Teams repeatedly handling vendor onboarding or similar submission-heavy workflows where delays are caused by hidden dependencies.</p></div>
-          <div class="faq"><strong>Will this support Arabic?</strong><p>Yes. The product direction is bilingual from the start, with English/Arabic operational workflows in mind.</p></div>
-          <div class="faq"><strong>Is this live already?</strong><p>This page is the first market-facing version used to validate demand and collect early-access interest.</p></div>
+          <div class="faq"><strong>Will this support Arabic?</strong><p>Yes. The product direction is bilingual from the start, with English and Arabic operational workflows in mind.</p></div>
+          <div class="faq"><strong>Is this live already?</strong><p>This page is the first market-facing version used to validate demand, collect early-access leads, and shape the first pilot workflow.</p></div>
         </div>
       </div>
     </section>
@@ -228,5 +367,13 @@
   <footer class="footer">
     <div class="wrap">ReadyPath — synthetic process twins for messy operational workflows.</div>
   </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('submitted') === 'true') {
+      const note = document.getElementById('success-note');
+      if (note) note.classList.add('show');
+    }
+  </script>
 </body>
 </html>
