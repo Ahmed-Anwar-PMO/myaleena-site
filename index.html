@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyAleena — Turn messy vendor paperwork into a clear submission path</title>
+  <meta name="description" content="Upload a vendor onboarding packet and get the real requirements, missing items, next actions, and submission readiness before delays and back-and-forth." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121936;
+      --soft: #1a234a;
+      --text: #eef2ff;
+      --muted: #b8c2e1;
+      --line: #2a376f;
+      --accent: #7c9cff;
+      --accent-2: #9ef0d0;
+      --danger: #ffb4b4;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, #0a0f1f 0%, #0b1020 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+    .hero {
+      padding: 64px 0 36px;
+      border-bottom: 1px solid rgba(124,156,255,.12);
+      background: radial-gradient(circle at top right, rgba(124,156,255,.18), transparent 26%), radial-gradient(circle at top left, rgba(158,240,208,.12), transparent 20%);
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid rgba(124,156,255,.28);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(124,156,255,.08);
+    }
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 1.02;
+      max-width: 900px;
+      letter-spacing: -0.03em;
+    }
+    .sub {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(17px, 2.2vw, 22px);
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--accent); color: #0a112f; }
+    .btn-secondary { border-color: rgba(255,255,255,.16); color: var(--text); background: rgba(255,255,255,.03); }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .card, .step, .faq, .proof, .panel {
+      background: rgba(18,25,54,.72);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+    }
+    .card { padding: 18px; }
+    .card strong { display: block; margin-bottom: 8px; font-size: 15px; }
+    section { padding: 42px 0; }
+    h2 { font-size: clamp(26px,4vw,40px); margin: 0 0 12px; }
+    .lead { color: var(--muted); max-width: 800px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 22px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 22px; }
+    .step, .faq, .proof, .panel { padding: 20px; }
+    .kicker { color: var(--accent-2); font-weight: 700; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
+    ul { padding-left: 18px; margin: 12px 0 0; color: var(--muted); }
+    li + li { margin-top: 8px; }
+    .danger-list li::marker { color: var(--danger); }
+    .process { display:grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; margin-top: 22px; }
+    .footer {
+      padding: 28px 0 54px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .cta-panel {
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .small { font-size: 14px; color: var(--muted); }
+    .faq p, .proof p, .panel p { color: var(--muted); margin: 8px 0 0; }
+    @media (max-width: 920px) {
+      .meta, .grid-3, .grid-2, .process, .cta-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">MyAleena • Vendor Onboarding Twin • Bilingual-ready</div>
+      <h1>Turn messy vendor onboarding packets into a clear submission path.</h1>
+      <p class="sub">Upload the packet. We map the real requirements, missing documents, ambiguity points, and next actions — before delays, back-and-forth, and silent rejections.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#waitlist">Join the early access list</a>
+        <a class="btn btn-secondary" href="#how">See how it works</a>
+      </div>
+      <div class="meta">
+        <div class="card"><strong>Built for</strong> procurement-light teams, agencies, operations teams, and companies handling vendor paperwork repeatedly.</div>
+        <div class="card"><strong>Output</strong> requirements map, missing-doc list, risk flags, readiness score, and next-step checklist.</div>
+        <div class="card"><strong>Why now</strong> most onboarding workflows still live in PDFs, email chains, spreadsheets, and tribal memory.</div>
+        <div class="card"><strong>Positioning</strong> not OCR, not RPA, not generic document AI — a machine-readable twin for messy operational flows.</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <h2>The real problem is not the document. It’s the hidden logic between documents.</h2>
+        <p class="lead">Vendor onboarding breaks because requirements are scattered, dependencies are implicit, and teams only discover missing items after delays. MyAleena reconstructs the process itself — not just the files.</p>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="kicker">Without MyAleena</div>
+            <ul class="danger-list">
+              <li>Confusing onboarding packets and vague requirements</li>
+              <li>Back-and-forth with suppliers over missing documents</li>
+              <li>Approval bottlenecks caused by invisible dependencies</li>
+              <li>Repeated delays because no one knows what “ready” means</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kicker">With MyAleena</div>
+            <ul>
+              <li>A clean requirements map from messy packet inputs</li>
+              <li>A missing-items checklist before submission starts</li>
+              <li>Ambiguity and risk flags surfaced early</li>
+              <li>A structured readiness score and next-step workflow</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <h2>How it works</h2>
+        <p class="lead">The first version is focused, sharp, and operational. It takes packet chaos and turns it into a submission plan teams can actually act on.</p>
+        <div class="process">
+          <div class="step"><div class="kicker">Step 1</div><strong>Upload packet inputs</strong><p>PDFs, screenshots, requirement emails, and notes from the other side.</p></div>
+          <div class="step"><div class="kicker">Step 2</div><strong>Extract the process twin</strong><p>We reconstruct requirements, dependencies, fields, missing evidence, and exception paths.</p></div>
+          <div class="step"><div class="kicker">Step 3</div><strong>Get a readiness output</strong><p>Receive missing-doc requests, risk flags, a checklist tree, and a submission-ready score.</p></div>
+          <div class="step"><div class="kicker">Step 4</div><strong>Move faster with less rework</strong><p>Your team stops guessing and starts executing from a real map.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>What the first release will include</h2>
+        <div class="grid-3">
+          <div class="proof"><div class="kicker">Requirements graph</div><p>A normalized view of what is required, what depends on what, and what is still unclear.</p></div>
+          <div class="proof"><div class="kicker">Missing-doc engine</div><p>A supplier-facing list of what is missing and what needs clarification before internal review.</p></div>
+          <div class="proof"><div class="kicker">Readiness scoring</div><p>A practical “ready / not ready / blocked” status so teams can stop guessing.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist">
+      <div class="wrap">
+        <h2>Join early access</h2>
+        <p class="lead">We’re validating the first release with teams that repeatedly handle vendor onboarding and submission-heavy workflows.</p>
+        <div class="cta-panel">
+          <div class="panel">
+            <div class="kicker">Who should join</div>
+            <ul>
+              <li>Operations teams handling supplier onboarding</li>
+              <li>Agencies or service firms dealing with repeated client/vendor documentation</li>
+              <li>Procurement-light teams drowning in onboarding packets</li>
+              <li>Teams wanting a bilingual English/Arabic-ready workflow layer</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kicker">Early access CTA</div>
+            <p><strong>Email to join:</strong> <a href="mailto:anwerahmed148@gmail.com?subject=MyAleena%20Early%20Access">anwerahmed148@gmail.com</a></p>
+            <p><strong>Subject line:</strong> MyAleena Early Access</p>
+            <p class="small">Temporary CTA until the Tally form is connected.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>FAQ</h2>
+        <div class="grid-2">
+          <div class="faq"><strong>Is this OCR or a generic document chatbot?</strong><p>No. The point is reconstructing the operational logic between requirements, documents, exceptions, and readiness.</p></div>
+          <div class="faq"><strong>Who is this for first?</strong><p>Teams repeatedly handling vendor onboarding or similar submission-heavy workflows where delays are caused by hidden dependencies.</p></div>
+          <div class="faq"><strong>Will this support Arabic?</strong><p>Yes. The product direction is bilingual from the start, with English/Arabic operational workflows in mind.</p></div>
+          <div class="faq"><strong>Is this live already?</strong><p>This page is the first market-facing version used to validate demand and collect early-access interest.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">MyAleena — synthetic process twins for messy operational workflows.</div>
+  </footer>
+</body>
+</html>
